@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ConectaMundo</title>
+<meta name="description" content="Conectando estudantes, idiomas e oportunidades. Comunidade, prática de idiomas e informações sobre a cidade e a universidade em um único lugar.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ConectaMundo">
+<meta property="og:title" content="ConectaMundo">
+<meta property="og:description" content="Conectando estudantes, idiomas e oportunidades. Comunidade, prática de idiomas e informações sobre a cidade e a universidade em um único lugar.">
+<meta property="og:url" content="https://conecta-mundo.github.io/">
+<meta property="og:image" content="https://conecta-mundo.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --accent:#E2703A;
+    --teal:#2F6F68;
+    --ink:#1E2A32;
+    --cream:#FBF5EC;
+    --panel-tan:#F3E9D8;
+    --panel-teal:#E8F0EE;
+    --border:#EADFC9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Work Sans',sans-serif;background:var(--cream);color:var(--ink)}
+  a{color:var(--teal);text-decoration:none}
+  a:hover{color:var(--ink)}
+  h1,h2,h3{font-family:'Fraunces',serif;margin:0}
+  .eyebrow{font-family:'Work Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;font-size:13px;font-weight:600;color:var(--teal)}
+  .btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:16px 32px;border-radius:999px;background:var(--accent);color:var(--cream);font-family:'Work Sans',sans-serif;font-weight:600;font-size:16px;border:none;cursor:pointer;transition:opacity .15s ease}
+  .btn-primary:hover{opacity:.88;color:var(--cream)}
+  .wrap{max-width:1160px;margin:0 auto;padding-left:40px;padding-right:40px}
+  .header-row{padding-top:20px;padding-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{display:flex;align-items:center;gap:10px;color:var(--ink)}
+  .brand:hover{color:var(--ink)}
+  .brand img{height:36px;width:auto}
+  .brand-name{font-family:'Fraunces',serif;font-weight:700;font-size:22px}
+  .header-right{display:flex;align-items:center;gap:14px}
+  .lang{display:inline-flex;border:1px solid var(--border);border-radius:999px;overflow:hidden;background:#fff}
+  .lang button{padding:8px 12px;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+  .lang button[aria-pressed="true"]{background:var(--ink);color:var(--cream)}
+
+  input[type="text"],input[type="email"],textarea{font-family:'Work Sans',sans-serif;font-size:16px;padding:12px 14px;border-radius:10px;border:1px solid #D8CBB2;background:#FFFFFF;width:100%;color:var(--ink)}
+  textarea{resize:vertical;min-height:110px}
+  input[type="radio"],input[type="checkbox"]{width:18px;height:18px;padding:0;margin:0;flex:0 0 18px;accent-color:var(--accent);cursor:pointer}
+  input:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+  fieldset{border:none;margin:0;padding:0}
+  legend{font-weight:600;font-size:15px;margin-bottom:10px;padding:0;color:var(--ink)}
+  label.option{display:flex;align-items:center;justify-content:flex-start;gap:10px;cursor:pointer;font-size:15px;margin-bottom:8px;color:#3E4A50}
+  label.field-label{display:block;font-size:14px;font-weight:600;margin-bottom:6px;color:var(--ink)}
+  .step-num{font-family:'Fraunces',serif;font-size:40px;font-weight:700;color:var(--accent);opacity:.35}
+  .card{background:#FFFFFF;border:1px solid var(--border);border-radius:20px;padding:32px}
+  .notice{font-size:13px;line-height:1.5;color:#7A8A8F;margin:0}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .form-status{font-size:14px;line-height:1.5;margin:0;color:#7A8A8F}
+  .form-status:empty{display:none}
+  .form-status.err{color:#B3261E;font-weight:500}
+  .btn-primary:disabled{opacity:.6;cursor:default}
+
+  /* antes e depois */
+  .ba-scatter{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  .ba-chip{background:#FFFFFF;border:1px dashed #C9BBA0;border-radius:14px;padding:12px 16px;font-size:15px;color:#4A5A60;line-height:1.4}
+  .ba-chip:nth-child(1){transform:rotate(-2deg)}
+  .ba-chip:nth-child(2){transform:rotate(1.5deg)}
+  .ba-chip:nth-child(3){transform:rotate(-1deg)}
+  .ba-chip:nth-child(4){transform:rotate(2deg)}
+  .ba-list{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+  .ba-list li{display:flex;align-items:flex-start;gap:12px;font-size:16px;line-height:1.5;color:#3E4A50}
+  .ba-list svg{flex:0 0 22px;margin-top:2px}
+
+  /* exemplo */
+  .ex-row{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;margin-top:48px;text-align:left}
+  .ex-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+
+  /* previa do app */
+  .phones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-top:56px;justify-items:center}
+  .phone-wrap{text-align:center}
+  .phone{width:232px;height:440px;border:8px solid var(--ink);border-radius:36px;background:#FFFFFF;overflow:hidden;position:relative;text-align:left;box-shadow:0 18px 40px rgba(30,42,50,.12)}
+  .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:70px;height:16px;background:var(--ink);border-radius:0 0 12px 12px}
+  .phone-screen{padding:30px 16px 16px}
+  .ph-title{font-family:'Fraunces',serif;font-weight:700;font-size:18px}
+  .ph-sub{font-size:12px;color:#7A8A8F;margin-top:2px}
+  .ph-avatar{width:56px;height:56px;border-radius:50%;background:var(--panel-teal);display:flex;align-items:center;justify-content:center;margin:16px 0 8px}
+  .ph-name{font-weight:600;font-size:15px}
+  .ph-row{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;padding:8px 0;border-bottom:1px solid var(--border);color:#3E4A50}
+  .ph-k{color:#7A8A8F}
+  .ph-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);font-weight:600;margin:14px 0 8px}
+  .chip{display:inline-block;padding:5px 10px;border-radius:999px;background:var(--panel-tan);font-size:12px;color:#3E4A50;margin:0 6px 6px 0}
+  .ph-item{display:flex;align-items:center;gap:10px;background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:10px;font-size:12.5px;line-height:1.35;color:#3E4A50}
+  .ph-dot{flex:0 0 26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+  .ph-card{border:1px solid var(--border);border-radius:14px;padding:12px;margin-top:12px}
+  .ph-card-top{display:flex;align-items:center;gap:10px}
+  .ph-mini{flex:0 0 34px;height:34px;border-radius:50%;background:var(--panel-teal);display:flex;align-items:center;justify-content:center}
+  .ph-card b{display:block;font-size:12.5px;font-weight:600}
+  .ph-card span.sm{display:block;font-size:11.5px;color:#7A8A8F}
+  .ph-btn{margin-top:10px;display:block;text-align:center;background:var(--accent);color:var(--cream);border-radius:999px;font-size:12px;font-weight:600;padding:7px}
+  .phone-cap{margin-top:16px;font-weight:600;font-size:15px}
+
+  /* instituicoes */
+  details.inst{background:#FFFFFF;border:1px solid var(--border);border-radius:16px;padding:0}
+  details.inst summary{cursor:pointer;list-style:none;padding:20px 24px;color:var(--teal);font-weight:600;font-size:15px;line-height:1.5;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  details.inst summary::-webkit-details-marker{display:none}
+  details.inst summary::after{content:"+";font-size:22px;line-height:1}
+  details.inst[open] summary::after{content:"\2212"}
+  details.inst .inst-body{padding:0 24px 24px}
+
+  @media (max-width:860px){
+    .grid-2{grid-template-columns:1fr !important}
+    .hero-grid{grid-template-columns:1fr !important}
+    .hero-title{font-size:32px !important}
+    .wrap{padding-left:24px;padding-right:24px}
+    .ex-row{grid-template-columns:1fr}
+    .ex-arrow{transform:rotate(90deg);margin:0 auto}
+    .phones{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:20px;justify-content:flex-start;padding-bottom:16px}
+    .phone-wrap{scroll-snap-align:center;flex:0 0 auto}
+  }
+  @media (max-width:560px){
+    .header-cta{display:none}
+    .brand-name{font-size:20px}
+  }
+</style>
+</head>
+<body>
+
+<header style="width:100%;border-bottom:1px solid var(--border);">
+  <div class="wrap header-row">
+    <a class="brand" href="./">
+      <img src="logo.png" data-i18n-alt="al_logo" alt="Símbolo do ConectaMundo">
+      <span class="brand-name">ConectaMundo</span>
+    </a>
+    <div class="header-right">
+      <div class="lang" role="group" data-i18n-aria="ar_lang" aria-label="Idioma da página">
+        <button type="button" data-lang="pt" aria-pressed="true">PT</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a href="#cta" class="btn-primary header-cta" style="padding:12px 24px;font-size:14px;" data-i18n="cta_short">Quero participar</a>
+    </div>
+  </div>
+</header>
+
+<section id="hero" style="width:100%;">
+  <div class="wrap hero-grid" style="padding-top:96px;padding-bottom:80px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;">
+    <div>
+      <div class="eyebrow" data-i18n="hero_eyebrow">Para estudantes internacionais e locais</div>
+      <h1 class="hero-title" style="font-size:48px;line-height:1.15;margin-top:16px;" data-i18n="hero_title">Chegando em um novo país? Você não precisa passar por isso sozinho.</h1>
+      <p style="font-size:18px;line-height:1.6;color:#4A5A60;margin-top:24px;max-width:520px;" data-i18n="hero_text">O ConectaMundo reúne comunidade, prática de idiomas e informações sobre a cidade e a universidade em um único lugar, pensado para estudantes internacionais e locais.</p>
+      <div style="margin-top:32px;">
+        <a href="#cta" class="btn-primary" data-i18n="hero_cta">Quero conhecer o ConectaMundo</a>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;">
+      <div style="width:100%;max-width:420px;aspect-ratio:1/1;background:var(--panel-tan);border-radius:28px;display:flex;align-items:center;justify-content:center;padding:40px;">
+        <svg viewBox="0 0 240 240" width="100%" height="100%" fill="none" aria-hidden="true">
+          <path d="M70 70L120 120M170 60L120 120M190 150L120 120M90 180L120 120" stroke="#C9BBA0" stroke-width="2" />
+          <circle cx="70" cy="70" r="10" fill="var(--teal)" />
+          <circle cx="170" cy="60" r="8" fill="var(--accent)" />
+          <circle cx="190" cy="150" r="10" fill="var(--teal)" />
+          <circle cx="90" cy="180" r="8" fill="var(--accent)" />
+          <circle cx="120" cy="120" r="14" fill="var(--ink)" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problema" style="width:100%;background:var(--panel-tan);">
+  <div class="wrap" style="max-width:840px;padding-top:80px;padding-bottom:80px;">
+    <div class="eyebrow" data-i18n="prob_eyebrow">O problema</div>
+    <h2 style="font-size:32px;margin-top:12px;" data-i18n="prob_title">A informação certa nunca está no mesmo lugar</h2>
+    <p style="font-size:18px;line-height:1.7;color:#3E4A50;margin-top:20px;" data-i18n="prob_text">Quem se muda para outro país para estudar costuma enfrentar sempre o mesmo obstáculo: as informações e conexões de que precisa estão espalhadas. Um aplicativo serve para praticar idioma, outro site mostra eventos, e as dicas sobre moradia, burocracia ou vida universitária ficam perdidas em diferentes grupos de redes sociais. Isso deixa o processo de adaptação mais demorado e cansativo.</p>
+  </div>
+</section>
+
+<section id="antes-depois" style="width:100%;background:#FFFFFF;">
+  <div class="wrap" style="padding-top:96px;padding-bottom:96px;">
+    <div class="eyebrow" style="text-align:center;" data-i18n="ba_eyebrow">Antes e depois</div>
+    <h2 style="font-size:34px;margin-top:12px;text-align:center;" data-i18n="ba_title">Tudo o que você procura, em um só lugar</h2>
+    <div class="grid-2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;margin-top:56px;align-items:stretch;">
+      <div style="background:var(--panel-tan);border-radius:20px;padding:36px;">
+        <h3 style="font-size:22px;" data-i18n="ba_before">Hoje</h3>
+        <div class="ba-scatter">
+          <div class="ba-chip" data-i18n="ba_b1">Um aplicativo para praticar idiomas</div>
+          <div class="ba-chip" data-i18n="ba_b2">Um site para achar eventos</div>
+          <div class="ba-chip" data-i18n="ba_b3">Grupos de redes sociais para moradia e burocracia</div>
+          <div class="ba-chip" data-i18n="ba_b4">Um grupo de WhatsApp para tirar dúvidas</div>
+        </div>
+      </div>
+      <div style="background:var(--cream);border:2px solid var(--teal);border-radius:20px;padding:36px;">
+        <h3 style="font-size:22px;color:var(--teal);" data-i18n="ba_after">Com o ConectaMundo</h3>
+        <ul class="ba-list">
+          <li><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2F6F68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span data-i18n="ba_a1">Comunidade da sua cidade ou universidade</span></li>
+          <li><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2F6F68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span data-i18n="ba_a2">Prática de idiomas</span></li>
+          <li><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2F6F68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span data-i18n="ba_a3">Eventos e grupos de estudo</span></li>
+          <li><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2F6F68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span data-i18n="ba_a4">Informações úteis sobre a vida no novo país</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="como-ajuda" style="width:100%;">
+  <div class="wrap" style="padding-top:96px;padding-bottom:96px;">
+    <div class="eyebrow" style="text-align:center;" data-i18n="how_eyebrow">Como funciona</div>
+    <h2 style="font-size:34px;margin-top:12px;text-align:center;" data-i18n="how_title">Como o ConectaMundo ajuda</h2>
+    <div class="grid-2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;margin-top:56px;">
+      <div class="card">
+        <div class="step-num">01</div>
+        <h3 style="font-size:19px;margin-top:8px;" data-i18n="s1_t">Crie seu perfil</h3>
+        <p style="font-size:15px;line-height:1.6;color:#4A5A60;margin-top:8px;" data-i18n="s1_p">Entre na comunidade da sua cidade ou universidade.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">02</div>
+        <h3 style="font-size:19px;margin-top:8px;" data-i18n="s2_t">Encontre parceiros de idioma</h3>
+        <p style="font-size:15px;line-height:1.6;color:#4A5A60;margin-top:8px;" data-i18n="s2_p">Converse com pessoas que têm interesses parecidos com os seus.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">03</div>
+        <h3 style="font-size:19px;margin-top:8px;" data-i18n="s3_t">Descubra oportunidades</h3>
+        <p style="font-size:15px;line-height:1.6;color:#4A5A60;margin-top:8px;" data-i18n="s3_p">Eventos, grupos de estudo e novidades perto de você.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">04</div>
+        <h3 style="font-size:19px;margin-top:8px;" data-i18n="s4_t">Conecte-se com quem já está lá</h3>
+        <p style="font-size:15px;line-height:1.6;color:#4A5A60;margin-top:8px;" data-i18n="s4_p">Fale com quem já vive na cidade e pode ajudar na adaptação.</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="#cta" class="btn-primary" data-i18n="cta_short">Quero participar</a>
+    </div>
+  </div>
+</section>
+
+<section id="exemplo" style="width:100%;background:var(--panel-tan);">
+  <div class="wrap" style="max-width:960px;padding-top:96px;padding-bottom:96px;text-align:center;">
+    <div class="eyebrow" data-i18n="ex_eyebrow">Um exemplo</div>
+    <h2 style="font-size:34px;margin-top:12px;" data-i18n="ex_title">Cada um pratica o idioma que quer aprender</h2>
+    <div class="ex-row">
+      <div class="card">
+        <div class="ex-avatar" style="background:var(--panel-teal);"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#2F6F68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/></svg></div>
+        <h3 style="font-size:20px;" data-i18n="ex_c1_t">Estudante brasileiro</h3>
+        <p style="font-size:15px;line-height:1.6;color:#4A5A60;margin-top:8px;" data-i18n="ex_c1_p">Fala português e está aprendendo alemão.</p>
+      </div>
+      <svg class="ex-arrow" viewBox="0 0 48 24" width="56" height="28" fill="none" stroke="#E2703A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h38M36 3l6 5-6 5"/><path d="M44 17H6M12 12l-6 5 6 5"/></svg>
+      <div class="card">
+        <div class="ex-avatar" style="background:#FBE4D6;"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#E2703A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/></svg></div>
+        <h3 style="font-size:20px;" data-i18n="ex_c2_t">Pessoa que fala alemão</h3>
+        <p style="font-size:15px;line-height:1.6;color:#4A5A60;margin-top:8px;" data-i18n="ex_c2_p">Quer praticar português.</p>
+      </div>
+    </div>
+    <p style="font-size:18px;line-height:1.7;color:#3E4A50;margin:40px auto 0;max-width:640px;" data-i18n="ex_text">O ConectaMundo pode aproximar os dois, e cada um ajuda o outro a praticar.</p>
+  </div>
+</section>
+
+<section id="previa" style="width:100%;background:#FFFFFF;">
+  <div class="wrap" style="padding-top:96px;padding-bottom:96px;">
+    <div class="eyebrow" style="text-align:center;" data-i18n="pv_eyebrow">Prévia ilustrativa</div>
+    <h2 style="font-size:34px;margin-top:12px;text-align:center;" data-i18n="pv_title">Uma ideia de como o app pode ser</h2>
+    <p style="font-size:16px;line-height:1.6;color:#4A5A60;margin:16px auto 0;text-align:center;max-width:560px;" data-i18n="pv_text">Telas ilustrativas do projeto, ainda em desenvolvimento.</p>
+    <div class="phones">
+
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="ph-title" data-i18n="ph1_title">Perfil</div>
+            <div class="ph-avatar"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#2F6F68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/></svg></div>
+            <div class="ph-name" data-i18n="ph1_name">Seu nome</div>
+            <div class="ph-sub">São Paulo, Mackenzie</div>
+            <div class="ph-row" style="margin-top:12px;"><span class="ph-k" data-i18n="ph1_speaks">Fala</span><span data-i18n="lang_pt">Português</span></div>
+            <div class="ph-row"><span class="ph-k" data-i18n="ph1_practice">Quer praticar</span><span data-i18n="lang_de">Alemão</span></div>
+            <div class="ph-label" data-i18n="ph1_interests">Interesses</div>
+            <div><span class="chip" data-i18n="opt_amizades">Amizades</span><span class="chip" data-i18n="opt_idioma">Prática de idioma</span><span class="chip" data-i18n="opt_eventos">Eventos</span></div>
+          </div>
+        </div>
+        <div class="phone-cap" data-i18n="ph1_cap">Perfil</div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="ph-title" data-i18n="ph2_title">Comunidade</div>
+            <div class="ph-sub">São Paulo</div>
+            <div class="ph-item"><div class="ph-dot" style="background:var(--panel-teal);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2F6F68" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></div><span data-i18n="ph2_i1">Eventos culturais e acadêmicos</span></div>
+            <div class="ph-item"><div class="ph-dot" style="background:#FBE4D6;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2F6F68" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M7 10.5V15c0 1.5 2.2 3 5 3s5-1.5 5-3v-4.5"/></svg></div><span data-i18n="ph2_i2">Grupos de estudo</span></div>
+            <div class="ph-item"><div class="ph-dot" style="background:var(--panel-tan);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2F6F68" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v10H9l-5 4V6z"/></svg></div><span data-i18n="ph2_i3">Dicas de moradia e burocracia</span></div>
+            <div class="ph-item"><div class="ph-dot" style="background:var(--panel-teal);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2F6F68" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></div><span data-i18n="ph2_i4">Grupos de prática de idiomas</span></div>
+          </div>
+        </div>
+        <div class="phone-cap" data-i18n="ph2_cap">Comunidade</div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="ph-title" data-i18n="ph3_title">Parceiros de idioma</div>
+            <div class="ph-card">
+              <div class="ph-card-top"><div class="ph-mini"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#2F6F68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/></svg></div><div><b data-i18n="ph3_a1">Fala alemão</b><span class="sm" data-i18n="ph3_a2">Quer praticar português</span></div></div>
+              <span class="ph-btn" data-i18n="ph3_btn">Conversar</span>
+            </div>
+            <div class="ph-card">
+              <div class="ph-card-top"><div class="ph-mini" style="background:#FBE4D6;"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#E2703A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/></svg></div><div><b data-i18n="ph3_b1">Fala inglês</b><span class="sm" data-i18n="ph3_b2">Quer praticar espanhol</span></div></div>
+              <span class="ph-btn" data-i18n="ph3_btn">Conversar</span>
+            </div>
+          </div>
+        </div>
+        <div class="phone-cap" data-i18n="ph3_cap">Parceiros de idioma</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="pra-quem" style="width:100%;background:var(--panel-teal);">
+  <div class="wrap" style="padding-top:96px;padding-bottom:96px;">
+    <div class="eyebrow" style="text-align:center;" data-i18n="who_eyebrow">Pra quem é</div>
+    <h2 style="font-size:34px;margin-top:12px;text-align:center;" data-i18n="who_title">Feito para dois públicos que se completam</h2>
+    <div class="grid-2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;margin-top:56px;">
+      <div style="background:#FFFFFF;border-radius:20px;padding:36px;">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#2F6F68" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18" />
+          <path d="M12 3c2.5 2.5 3.8 5.8 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.8-3.8-9s1.3-6.5 3.8-9z" />
+        </svg>
+        <h3 style="font-size:21px;margin-top:16px;" data-i18n="who1_t">Estudantes internacionais</h3>
+        <p style="font-size:15px;color:#4A5A60;margin-top:8px;" data-i18n="who1_p">Intercambistas, estudantes universitários e pessoas recém-chegadas ao país.</p>
+      </div>
+      <div style="background:#FFFFFF;border-radius:20px;padding:36px;">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#2F6F68" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="8" r="3" />
+          <circle cx="17" cy="9" r="2.5" />
+          <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+          <path d="M15 14.5c2.5 .3 4.5 2.3 4.5 5.5" />
+        </svg>
+        <h3 style="font-size:21px;margin-top:16px;" data-i18n="who2_t">Estudantes locais</h3>
+        <p style="font-size:15px;color:#4A5A60;margin-top:8px;" data-i18n="who2_p">Interessados em idiomas, em outras culturas e em futuras oportunidades de intercâmbio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="diferencial" style="width:100%;">
+  <div class="wrap" style="max-width:840px;padding-top:96px;padding-bottom:96px;text-align:center;">
+    <div class="eyebrow" data-i18n="diff_eyebrow">O diferencial</div>
+    <p style="font-family:'Fraunces',serif;font-style:italic;font-size:28px;line-height:1.5;margin-top:20px;" data-i18n="diff_quote">"Hoje, se adaptar a um novo país significa usar um aplicativo para idioma, outro para eventos, e um grupo de WhatsApp para tirar dúvidas do dia a dia. O ConectaMundo junta tudo isso em um único lugar."</p>
+  </div>
+</section>
+
+<section id="cta" style="width:100%;background:var(--panel-tan);">
+  <div class="wrap" style="max-width:640px;padding-top:96px;padding-bottom:96px;">
+    <h2 style="font-size:32px;text-align:center;" data-i18n="cta_title">Quer ser um dos primeiros a testar o ConectaMundo?</h2>
+    <form id="form-lead" name="lead-conectamundo" method="POST" style="background:#FFFFFF;border-radius:24px;padding:40px;margin-top:40px;display:flex;flex-direction:column;gap:20px;">
+      <input type="hidden" name="form-name" value="lead-conectamundo">
+      <div class="hp" aria-hidden="true"><label>Não preencha este campo: <input name="bot-field" tabindex="-1" autocomplete="off"></label></div>
+      <div>
+        <label for="nome" class="field-label" data-i18n="f_name">Nome</label>
+        <input id="nome" type="text" name="nome" required placeholder="Seu nome completo" data-i18n-ph="ph_name">
+      </div>
+      <div>
+        <label for="email" class="field-label" data-i18n="f_email">E-mail</label>
+        <input id="email" type="email" name="email" required placeholder="voce@email.com" data-i18n-ph="ph_email">
+      </div>
+      <fieldset>
+        <legend data-i18n="f_profile">Você é estudante internacional ou local?</legend>
+        <label class="option" for="perfil-internacional"><input id="perfil-internacional" type="radio" name="perfil" value="internacional" required><span data-i18n="f_intl">Internacional</span></label>
+        <label class="option" for="perfil-local"><input id="perfil-local" type="radio" name="perfil" value="local" required><span data-i18n="f_local">Local</span></label>
+      </fieldset>
+      <div>
+        <label for="cidade" class="field-label" data-i18n="f_city">Cidade ou universidade</label>
+        <input id="cidade" type="text" name="cidade" required placeholder="Ex: São Paulo, Mackenzie" data-i18n-ph="ph_city">
+      </div>
+      <fieldset>
+        <legend data-i18n="f_interest">O que você mais busca no ConectaMundo?</legend>
+        <label class="option" for="int-amizades"><input id="int-amizades" type="checkbox" name="interesse" value="amizades" required><span data-i18n="opt_amizades">Amizades</span></label>
+        <label class="option" for="int-idioma"><input id="int-idioma" type="checkbox" name="interesse" value="idioma" required><span data-i18n="opt_idioma">Prática de idioma</span></label>
+        <label class="option" for="int-eventos"><input id="int-eventos" type="checkbox" name="interesse" value="eventos" required><span data-i18n="opt_eventos">Eventos</span></label>
+        <label class="option" for="int-estudo"><input id="int-estudo" type="checkbox" name="interesse" value="estudo" required><span data-i18n="opt_estudo">Grupos de estudo</span></label>
+      </fieldset>
+      <fieldset>
+        <legend data-i18n="f_lang">Qual idioma você quer praticar? (opcional)</legend>
+        <label class="option" for="idioma-portugues"><input id="idioma-portugues" type="checkbox" name="idioma" value="portugues"><span data-i18n="lang_pt">Português</span></label>
+        <label class="option" for="idioma-ingles"><input id="idioma-ingles" type="checkbox" name="idioma" value="ingles"><span data-i18n="lang_en">Inglês</span></label>
+        <label class="option" for="idioma-espanhol"><input id="idioma-espanhol" type="checkbox" name="idioma" value="espanhol"><span data-i18n="lang_es">Espanhol</span></label>
+        <label class="option" for="idioma-alemao"><input id="idioma-alemao" type="checkbox" name="idioma" value="alemao"><span data-i18n="lang_de">Alemão</span></label>
+        <label class="option" for="idioma-frances"><input id="idioma-frances" type="checkbox" name="idioma" value="frances"><span data-i18n="lang_fr">Francês</span></label>
+        <label class="option" for="idioma-italiano"><input id="idioma-italiano" type="checkbox" name="idioma" value="italiano"><span data-i18n="lang_it">Italiano</span></label>
+        <label class="option" for="idioma-outro"><input id="idioma-outro" type="checkbox" name="idioma" value="outro"><span data-i18n="lang_other">Outro</span></label>
+        <input id="idioma-outro-texto" type="text" name="idioma_outro" placeholder="Qual idioma?" data-i18n-ph="ph_lang_other" style="display:none;margin-top:4px;">
+      </fieldset>
+      <button type="submit" class="btn-primary" style="margin-top:8px;" data-i18n="cta_short">Quero participar</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+      <p class="notice" data-i18n="notice">Seus dados serão utilizados somente para nosso projeto.</p>
+    </form>
+  </div>
+</section>
+
+<section id="instituicoes" style="width:100%;">
+  <div class="wrap" style="max-width:640px;padding-top:48px;padding-bottom:64px;">
+    <details class="inst">
+      <summary><span data-i18n="inst_link">É de uma universidade, escola de idiomas ou associação estudantil? Fale com a gente.</span></summary>
+      <div class="inst-body">
+        <form id="form-inst" name="instituicoes-conectamundo" method="POST" style="display:flex;flex-direction:column;gap:18px;">
+          <input type="hidden" name="form-name" value="instituicoes-conectamundo">
+          <div class="hp" aria-hidden="true"><label>Não preencha este campo: <input name="bot-field" tabindex="-1" autocomplete="off"></label></div>
+          <div>
+            <label for="inst-nome" class="field-label" data-i18n="i_name">Nome da instituição</label>
+            <input id="inst-nome" type="text" name="instituicao" required placeholder="Nome da instituição" data-i18n-ph="ph_i_name">
+          </div>
+          <div>
+            <label for="inst-email" class="field-label" data-i18n="i_email">E-mail de contato</label>
+            <input id="inst-email" type="email" name="email" required placeholder="contato@instituicao.com" data-i18n-ph="ph_i_email">
+          </div>
+          <div>
+            <label for="inst-msg" class="field-label" data-i18n="i_msg">Mensagem</label>
+            <textarea id="inst-msg" name="mensagem" placeholder="Conte como sua instituição gostaria de participar" data-i18n-ph="ph_i_msg"></textarea>
+          </div>
+          <button type="submit" class="btn-primary" data-i18n="i_btn">Enviar mensagem</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <p class="notice" data-i18n="notice">Seus dados serão utilizados somente para nosso projeto.</p>
+        </form>
+      </div>
+    </details>
+  </div>
+</section>
+
+<footer style="width:100%;border-top:1px solid var(--border);">
+  <div class="wrap" style="padding-top:40px;padding-bottom:40px;text-align:center;">
+    <img src="logo.png" data-i18n-alt="al_logo" alt="Símbolo do ConectaMundo" style="height:32px;width:auto;">
+    <div style="font-family:'Fraunces',serif;font-weight:700;font-size:18px;margin-top:10px;">ConectaMundo</div>
+    <p style="font-size:14px;color:#7A8A8F;margin-top:8px;" data-i18n="foot_tag">Conectando estudantes, idiomas e oportunidades.</p>
+    <p style="font-size:13px;line-height:1.6;color:#7A8A8F;margin:16px auto 0;max-width:560px;" data-i18n="foot_note">Projeto acadêmico desenvolvido na disciplina Projetos Empreendedores, Universidade Presbiteriana Mackenzie.</p>
+    <p style="font-size:13px;line-height:1.6;color:#7A8A8F;margin:8px auto 0;max-width:560px;" data-i18n="foot_names">Feito por Antônio Carlos Machado Flores, Gabriela Stuchi Monteiro, Monika Aparecida Massa Quintano e Raphael Consani Mendes.</p>
+  </div>
+</footer>
+
+<script>
+  // COLE AQUI a URL do app da web do Google Apps Script (termina em /exec).
+  window.CM_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYMZ_rjJ7wv6F3FzxwEOUF3VZf7gc5lv5biyr3Vv6TGUmZqmivXaYgWHHIhB5PfYJpRw/exec';
+</script>
+<script>
+(function(){
+  var EN = {"js_sending": "Sending...", "js_error": "We could not send it right now. Check your connection and try again.", "js_config": "The form is not set up yet. Please try again later.", "lang_pt": "Portuguese", "lang_en": "English", "lang_es": "Spanish", "lang_de": "German", "lang_fr": "French", "lang_it": "Italian", "al_logo": "ConectaMundo symbol", "ar_lang": "Page language", "cta_short": "I want to join", "hero_eyebrow": "For international and local students", "hero_title": "Arriving in a new country? You don't have to go through it alone.", "hero_text": "ConectaMundo brings together community, language practice, and information about the city and the university in a single place, designed for international and local students.", "hero_cta": "I want to get to know ConectaMundo", "prob_eyebrow": "The problem", "prob_title": "The right information is never in the same place", "prob_text": "Anyone who moves to another country to study usually faces the same obstacle: the information and connections they need are scattered. One app is for practicing a language, another site lists events, and tips about housing, bureaucracy, or university life get lost in different social media groups. This makes the adjustment slower and more tiring.", "ba_eyebrow": "Before and after", "ba_title": "Everything you look for, in one place", "ba_before": "Today", "ba_b1": "An app to practice languages", "ba_b2": "A site to find events", "ba_b3": "Social media groups for housing and bureaucracy", "ba_b4": "A WhatsApp group to ask questions", "ba_after": "With ConectaMundo", "ba_a1": "A community for your city or university", "ba_a2": "Language practice", "ba_a3": "Events and study groups", "ba_a4": "Useful information about life in the new country", "how_eyebrow": "How it works", "how_title": "How ConectaMundo helps", "s1_t": "Create your profile", "s1_p": "Join the community of your city or university.", "s2_t": "Find language partners", "s2_p": "Chat with people who share interests with you.", "s3_t": "Discover opportunities", "s3_p": "Events, study groups, and news near you.", "s4_t": "Connect with people who are already there", "s4_p": "Talk to people who already live in the city and can help you adjust.", "ex_eyebrow": "An example", "ex_title": "Each one practices the language they want to learn", "ex_c1_t": "Brazilian student", "ex_c1_p": "Speaks Portuguese and is learning German.", "ex_c2_t": "German speaker", "ex_c2_p": "Wants to practice Portuguese.", "ex_text": "ConectaMundo can bring the two together, and each one helps the other practice.", "pv_eyebrow": "Illustrative preview", "pv_title": "An idea of what the app could look like", "pv_text": "Illustrative screens of the project, still in development.", "ph1_title": "Profile", "ph1_name": "Your name", "ph1_speaks": "Speaks", "ph1_practice": "Wants to practice", "ph1_interests": "Interests", "opt_amizades": "Friendships", "opt_idioma": "Language practice", "opt_eventos": "Events", "ph1_cap": "Profile", "ph2_title": "Community", "ph2_i1": "Cultural and academic events", "ph2_i2": "Study groups", "ph2_i3": "Housing and bureaucracy tips", "ph2_i4": "Language practice groups", "ph2_cap": "Community", "ph3_title": "Language partners", "ph3_a1": "Speaks German", "ph3_a2": "Wants to practice Portuguese", "ph3_btn": "Chat", "ph3_b1": "Speaks English", "ph3_b2": "Wants to practice Spanish", "ph3_cap": "Language partners", "who_eyebrow": "Who it's for", "who_title": "Made for two audiences that complement each other", "who1_t": "International students", "who1_p": "Exchange students, university students, and people newly arrived in the country.", "who2_t": "Local students", "who2_p": "People interested in languages, other cultures, and future exchange opportunities.", "diff_eyebrow": "What sets us apart", "diff_quote": "\"Today, adjusting to a new country means using one app for language, another for events, and a WhatsApp group to ask everyday questions. ConectaMundo brings all of this together in a single place.\"", "cta_title": "Want to be one of the first to try ConectaMundo?", "f_name": "Name", "ph_name": "Your full name", "f_email": "Email", "ph_email": "you@email.com", "f_profile": "Are you an international or a local student?", "f_intl": "International", "f_local": "Local", "f_city": "City or university", "ph_city": "E.g., São Paulo, Mackenzie", "f_interest": "What are you looking for most in ConectaMundo?", "opt_estudo": "Study groups", "f_lang": "Which language do you want to practice? (optional)", "lang_other": "Other", "ph_lang_other": "Which language?", "notice": "Your data will only be used for our project.", "inst_link": "Are you from a university, language school, or student association? Get in touch.", "i_name": "Institution name", "ph_i_name": "Institution name", "i_email": "Contact email", "ph_i_email": "contact@institution.com", "i_msg": "Message", "ph_i_msg": "Tell us how your institution would like to take part", "i_btn": "Send message", "foot_tag": "Connecting students, languages, and opportunities.", "foot_note": "Academic project developed in the \"Projetos Empreendedores\" course at Universidade Presbiteriana Mackenzie.", "foot_names": "Made by Antônio Carlos Machado Flores, Gabriela Stuchi Monteiro, Monika Aparecida Massa Quintano and Raphael Consani Mendes."};
+  var current = 'pt';
+  function fromUrl(){
+    try{ var q=new URLSearchParams(window.location.search).get('lang'); if(q==='en'||q==='pt') return q; }catch(e){}
+    return null;
+  }
+  function fromStore(){
+    try{ var s=window.localStorage.getItem('cm_lang'); if(s==='en'||s==='pt') return s; }catch(e){}
+    return null;
+  }
+  function store(l){ try{ window.localStorage.setItem('cm_lang', l); }catch(e){} }
+
+  // guarda o texto original em portugues
+  var nodes = document.querySelectorAll('[data-i18n],[data-i18n-ph],[data-i18n-alt],[data-i18n-aria]');
+  for(var i=0;i<nodes.length;i++){
+    var n=nodes[i];
+    if(n.hasAttribute('data-i18n')) n.setAttribute('data-pt', n.textContent);
+    if(n.hasAttribute('data-i18n-ph')) n.setAttribute('data-pt-ph', n.getAttribute('placeholder')||'');
+    if(n.hasAttribute('data-i18n-alt')) n.setAttribute('data-pt-alt', n.getAttribute('alt')||'');
+    if(n.hasAttribute('data-i18n-aria')) n.setAttribute('data-pt-aria', n.getAttribute('aria-label')||'');
+  }
+
+  function apply(l){
+    current = l;
+    document.documentElement.lang = (l==='en') ? 'en' : 'pt-BR';
+    for(var i=0;i<nodes.length;i++){
+      var n=nodes[i], k;
+      if((k=n.getAttribute('data-i18n'))) n.textContent = (l==='en' && EN[k]!==undefined) ? EN[k] : n.getAttribute('data-pt');
+      if((k=n.getAttribute('data-i18n-ph'))) n.setAttribute('placeholder', (l==='en' && EN[k]!==undefined) ? EN[k] : n.getAttribute('data-pt-ph'));
+      if((k=n.getAttribute('data-i18n-alt'))) n.setAttribute('alt', (l==='en' && EN[k]!==undefined) ? EN[k] : n.getAttribute('data-pt-alt'));
+      if((k=n.getAttribute('data-i18n-aria'))) n.setAttribute('aria-label', (l==='en' && EN[k]!==undefined) ? EN[k] : n.getAttribute('data-pt-aria'));
+    }
+    var btns = document.querySelectorAll('.lang button');
+    for(var j=0;j<btns.length;j++){
+      btns[j].setAttribute('aria-pressed', btns[j].getAttribute('data-lang')===l ? 'true' : 'false');
+    }
+  }
+
+  var initial = fromUrl();
+  if(initial){ store(initial); } else { initial = fromStore() || 'pt'; }
+  apply(initial);
+
+  var btns = document.querySelectorAll('.lang button');
+  for(var b=0;b<btns.length;b++){
+    btns[b].addEventListener('click', function(){
+      var l=this.getAttribute('data-lang'); store(l); apply(l);
+    });
+  }
+  
+  var outro=document.getElementById('idioma-outro'), outroTxt=document.getElementById('idioma-outro-texto');
+  if(outro && outroTxt){
+    outro.addEventListener('change', function(){
+      outroTxt.style.display = outro.checked ? 'block' : 'none';
+      if(!outro.checked){ outroTxt.value=''; }
+    });
+  }
+  // "O que voce mais busca": obrigatorio marcar pelo menos uma opcao
+  var interesses = document.querySelectorAll('input[name="interesse"]');
+  function syncInteresses(){
+    var alguma = false;
+    for(var i=0;i<interesses.length;i++){ if(interesses[i].checked){ alguma = true; } }
+    for(var j=0;j<interesses.length;j++){ interesses[j].required = !alguma; }
+  }
+  for(var k=0;k<interesses.length;k++){
+    interesses[k].addEventListener('invalid', function(){
+      this.setCustomValidity(current==='en' ? 'Select at least one option.' : 'Marque pelo menos uma opção.');
+    });
+    interesses[k].addEventListener('change', function(){
+      for(var m=0;m<interesses.length;m++){ interesses[m].setCustomValidity(''); }
+      syncInteresses();
+    });
+  }
+  syncInteresses();
+
+  // Envio dos formularios para o Google Apps Script
+  var SCRIPT_URL = window.CM_SCRIPT_URL || '';
+  function tr(chave, pt){ return (current==='en' && EN[chave]!==undefined) ? EN[chave] : pt; }
+  var resets = [];
+  function ligarFormulario(form, destino){
+    if(!form){ return; }
+    var botao = form.querySelector('button[type="submit"]');
+    var status = form.querySelector('.form-status');
+    var enviando = false;
+    function reset(){ enviando = false; botao.disabled = false; }
+    resets.push(function(){ reset(); status.className='form-status'; status.textContent=''; });
+    function falha(chave, pt){
+      reset();
+      status.className = 'form-status err';
+      status.textContent = tr(chave, pt);
+    }
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      if(enviando){ return; }
+      if(!SCRIPT_URL || SCRIPT_URL.indexOf('COLE_AQUI') === 0){
+        if(window.console){ console.error('CM_SCRIPT_URL nao configurada em index.html'); }
+        falha('js_config', 'O formulário ainda não está configurado. Tente novamente mais tarde.');
+        return;
+      }
+      enviando = true;
+      botao.disabled = true;
+      status.className = 'form-status';
+      status.textContent = tr('js_sending', 'Enviando...');
+      var dados = new FormData(form);
+      dados.append('idioma_pagina', current);
+      var controle = ('AbortController' in window) ? new AbortController() : null;
+      var limite = setTimeout(function(){ if(controle){ controle.abort(); } }, 20000);
+      fetch(SCRIPT_URL, { method: 'POST', body: dados, signal: controle ? controle.signal : undefined })
+        .then(function(resp){ return resp.json(); })
+        .then(function(json){
+          clearTimeout(limite);
+          if(json && json.result === 'success'){ window.location.href = destino; }
+          else { falha('js_error', 'Não foi possível enviar agora. Confira sua conexão e tente novamente.'); }
+        })
+        .catch(function(){
+          clearTimeout(limite);
+          falha('js_error', 'Não foi possível enviar agora. Confira sua conexão e tente novamente.');
+        });
+    });
+  }
+  ligarFormulario(document.getElementById('form-lead'), 'obrigado.html');
+  ligarFormulario(document.getElementById('form-inst'), 'obrigado-instituicoes.html');
+  window.addEventListener('pageshow', function(ev){
+    if(ev.persisted){ for(var r=0;r<resets.length;r++){ resets[r](); } }
+  });
+
+})();
+</script>
+</body>
+</html>

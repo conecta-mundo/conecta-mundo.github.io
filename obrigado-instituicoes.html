@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ConectaMundo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --accent:#E2703A;
+    --teal:#2F6F68;
+    --ink:#1E2A32;
+    --cream:#FBF5EC;
+    --panel-tan:#F3E9D8;
+    --panel-teal:#E8F0EE;
+    --border:#EADFC9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Work Sans',sans-serif;background:var(--cream);color:var(--ink)}
+  a{color:var(--teal);text-decoration:none}
+  a:hover{color:var(--ink)}
+  h1,h2,h3{font-family:'Fraunces',serif;margin:0}
+  .eyebrow{font-family:'Work Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;font-size:13px;font-weight:600;color:var(--teal)}
+  .btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:16px 32px;border-radius:999px;background:var(--accent);color:var(--cream);font-family:'Work Sans',sans-serif;font-weight:600;font-size:16px;border:none;cursor:pointer;transition:opacity .15s ease}
+  .btn-primary:hover{opacity:.88;color:var(--cream)}
+  .wrap{max-width:1160px;margin:0 auto;padding-left:40px;padding-right:40px}
+  .header-row{padding-top:20px;padding-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{display:flex;align-items:center;gap:10px;color:var(--ink)}
+  .brand:hover{color:var(--ink)}
+  .brand img{height:36px;width:auto}
+  .brand-name{font-family:'Fraunces',serif;font-weight:700;font-size:22px}
+  .header-right{display:flex;align-items:center;gap:14px}
+  .lang{display:inline-flex;border:1px solid var(--border);border-radius:999px;overflow:hidden;background:#fff}
+  .lang button{padding:8px 12px;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+  .lang button[aria-pressed="true"]{background:var(--ink);color:var(--cream)}
+
+  @media (max-width:860px){.wrap{padding-left:24px;padding-right:24px}}
+</style>
+</head>
+<body>
+
+<header style="width:100%;border-bottom:1px solid var(--border);">
+  <div class="wrap header-row">
+    <a class="brand" href="./">
+      <img src="logo.png" data-i18n-alt="al_logo" alt="Símbolo do ConectaMundo">
+      <span class="brand-name">ConectaMundo</span>
+    </a>
+  </div>
+</header>
+
+<main style="width:100%;">
+  <div class="wrap" style="padding-top:96px;padding-bottom:120px;display:flex;justify-content:center;">
+    <div style="background:#FFFFFF;border:1px solid var(--border);border-radius:24px;padding:56px 48px;max-width:640px;width:100%;text-align:center;">
+      <div class="eyebrow" data-i18n="ti_eb">Instituições</div>
+      <h1 style="font-size:40px;line-height:1.15;margin-top:16px;" data-i18n="ti_h">Mensagem recebida!</h1>
+      <p style="font-size:18px;line-height:1.7;color:#3E4A50;margin:24px 0 0;" data-i18n="ti_p">Recebemos a mensagem da sua instituição. Agradecemos o interesse no ConectaMundo.</p>
+      <a href="./" class="btn-primary" style="margin-top:36px;" data-i18n="ti_b">Voltar para a página inicial</a>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var EN = {"al_logo": "ConectaMundo symbol", "ti_eb": "Institutions", "ti_h": "Message received!", "ti_p": "We received your institution's message. Thank you for your interest in ConectaMundo.", "ti_b": "Back to the home page"};
+  var current = 'pt';
+  function fromUrl(){
+    try{ var q=new URLSearchParams(window.location.search).get('lang'); if(q==='en'||q==='pt') return q; }catch(e){}
+    return null;
+  }
+  function fromStore(){
+    try{ var s=window.localStorage.getItem('cm_lang'); if(s==='en'||s==='pt') return s; }catch(e){}
+    return null;
+  }
+  function store(l){ try{ window.localStorage.setItem('cm_lang', l); }catch(e){} }
+
+  // guarda o texto original em portugues
+  var nodes = document.querySelectorAll('[data-i18n],[data-i18n-ph],[data-i18n-alt],[data-i18n-aria]');
+  for(var i=0;i<nodes.length;i++){
+    var n=nodes[i];
+    if(n.hasAttribute('data-i18n')) n.setAttribute('data-pt', n.textContent);
+    if(n.hasAttribute('data-i18n-ph')) n.setAttribute('data-pt-ph', n.getAttribute('placeholder')||'');
+    if(n.hasAttribute('data-i18n-alt')) n.setAttribute('data-pt-alt', n.getAttribute('alt')||'');
+    if(n.hasAttribute('data-i18n-aria')) n.setAttribute('data-pt-aria', n.getAttribute('aria-label')||'');
+  }
+
+  function apply(l){
+    current = l;
+    document.documentElement.lang = (l==='en') ? 'en' : 'pt-BR';
+    for(var i=0;i<nodes.length;i++){
+      var n=nodes[i], k;
+      if((k=n.getAttribute('data-i18n'))) n.textContent = (l==='en' && EN[k]!==undefined) ? EN[k] : n.getAttribute('data-pt');
+      if((k=n.getAttribute('data-i18n-ph'))) n.setAttribute('placeholder', (l==='en' && EN[k]!==undefined) ? EN[k] : n.getAttribute('data-pt-ph'));
+      if((k=n.getAttribute('data-i18n-alt'))) n.setAttribute('alt', (l==='en' && EN[k]!==undefined) ? EN[k] : n.getAttribute('data-pt-alt'));
+      if((k=n.getAttribute('data-i18n-aria'))) n.setAttribute('aria-label', (l==='en' && EN[k]!==undefined) ? EN[k] : n.getAttribute('data-pt-aria'));
+    }
+    var btns = document.querySelectorAll('.lang button');
+    for(var j=0;j<btns.length;j++){
+      btns[j].setAttribute('aria-pressed', btns[j].getAttribute('data-lang')===l ? 'true' : 'false');
+    }
+  }
+
+  var initial = fromUrl();
+  if(initial){ store(initial); } else { initial = fromStore() || 'pt'; }
+  apply(initial);
+
+  var btns = document.querySelectorAll('.lang button');
+  for(var b=0;b<btns.length;b++){
+    btns[b].addEventListener('click', function(){
+      var l=this.getAttribute('data-lang'); store(l); apply(l);
+    });
+  }
+  
+})();
+</script>
+</body>
+</html>
